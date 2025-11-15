@@ -1,7 +1,7 @@
 -- Se no dropdown não for selectedPlayerName a referência nem targetPlayer, vc pode pedir pro chatgpt consertar falando o nome de referência
 
 
--- Serviços
+
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
@@ -12,13 +12,13 @@ local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 local humanoid = character:FindFirstChildOfClass("Humanoid")
 
 if not humanoidRootPart or not humanoid then
-    warn("Erro: HumanoidRootPart ou Humanoid não encontrados")
+    warn("error!")
     return
 end
 
 local originalPosition = humanoidRootPart.CFrame
 
--- Função: Obtém o ônibus
+
 local function GetBus()
     local vehicles = workspace:FindFirstChild("Vehicles")
     if vehicles then
@@ -27,7 +27,6 @@ local function GetBus()
     return nil
 end
 
--- Garante o spawn do TowTruck
 local bus = GetBus()
 if not bus then
     humanoidRootPart.CFrame = CFrame.new(1118.81, 75.998, -1138.61)
@@ -42,7 +41,7 @@ if not bus then
     bus = GetBus()
 end
 
--- Força o jogador a sentar
+
 if bus and bus:FindFirstChild("Body") then
     local seat = bus.Body:FindFirstChild("VehicleSeat")
     if seat and not humanoid.Sit then
@@ -61,7 +60,7 @@ if bus and bus:FindFirstChild("Body") then
     end
 end
 
--- Função: Simula pulo
+
 local function simulateJump()
     local h = character:FindFirstChildOfClass("Humanoid")
     if h then
@@ -69,7 +68,7 @@ local function simulateJump()
     end
 end
 
--- Função: Rastreia e flinga o jogador selecionado
+
 local function TrackPlayer()
     while true do
         local targetPlayer = Players:FindFirstChild(selectedPlayerName)
@@ -78,7 +77,7 @@ local function TrackPlayer()
             local targetRoot = targetPlayer.Character.HumanoidRootPart
 
             if targetHumanoid and targetHumanoid.Sit then
-                -- Jogador alvo sentou → fling
+                
                 if humanoid then
                     bus:SetPrimaryPartCFrame(CFrame.new(9999, 100, 9999))
                     task.wait(0.2)
@@ -88,7 +87,7 @@ local function TrackPlayer()
                 end
                 break
             else
-                -- Orbitando o jogador
+                
                 local time = tick() * 35
                 local lateral = math.sin(time) * 4
                 local frontBack = math.cos(time) * 20
@@ -101,5 +100,5 @@ local function TrackPlayer()
     end
 end
 
--- Inicia rastreamento
+
 task.spawn(TrackPlayer)
